@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-framework="javascript">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="sitestyle.css">
+    <link rel="stylesheet" href="sitestyle2.css">
+    <script src="js/lib/jquery-1.11.1.js"></script>
+    <script src="js/game.js"></script>
+</head>
+<body>
+
+<!--<div id="myDIV" class="header">-->
+<!--<h2 style="margin:5px">ToDo List</h2>-->
+<!--</div>-->
+<!--<form action="ToDoListResult">-->
+<!--<input type="text" class="converter-input" id="myInputs" name="getText">-->
+<!--<input type="submit" class="calculate" id="buttons" value="Add">-->
+<!--</form>-->
+<div>
+    <html class="todoapp">
+        <header class="header">
+            <h1>та ну на</h1>
+            <input class="new-todo" placeholder="запиши свою хрень)" autofocus
+                   type="text" class="converter-input" id="myInputs" name="getText">
+            <input type="submit" class="calculate" id="buttons" value="Add">
+        </header>
+        <script type="text/javascript">
+            $(function () {
+                $.getJSON('json', function (data) {
+                    for (var i = 0; i < data.task.length; i++) {
+                        $('#task').append('<tr><td>' + data.task[i].Description + '</td><td>' + data.task[i].Status +
+                            '</td><tr>');
+                    }
+                });
+            });
+        </script>
+
+        <script type="text/javascript">
+            $(document).on("click", "buttons", function () {
+                $.get("ToDoListJson", function (responseJson) {
+                    var $ul = $("<ul>").appendTo($("myUL"));
+                    $.each(responseJson, function (index, item) {
+                        $("<li>").text(item).appendTo($ul);
+                    });
+                });
+            });
+        </script>
+        <div id="createTODO">
+            Create new TODO: <input name="newTODO" type="text" id="newTODO">
+            <input type="button" id="saveBut" value="Save">
+
+        </div>
+
+        <script>
+
+
+            function firstLoad() {
+                $.get("http://localhost:9090/Servlet/todo", function (data) {
+                    loadTODOs(data)
+                });
+            }
+
+            function loadTODOs(data) {
+//        if(data[0] !== "empty") {
+//            for (var i = 0; i < data.length; i++) {
+//
+//            }
+//        }
+                console.log(data)
+            }
+
+            function checkDel(check) {
+
+                jQuery.ajax({
+                    url: "http://localhost:9090/Servlet/todo",
+                    type: "delete",
+                    data: JSON.stringify({
+                        id: check.id
+                    }),
+                    success: function (data, status) {
+                        check.setAttribute("disabled", "disabled");
+                    }
+                });
+            }
+
+            function click() {
+                if (input.value !== "") {
+                    $.post("http://localhost:9090/Servlet/todo",
+                        JSON.stringify({
+                            name: input.value
+                        }), function (data, status) {
+                            input.setAttribute("value", "");
+                        })
+                }
+                $.get("http://localhost:9090/Servlet/todo", function (data) {
+                    alert(data)
+                });
+            }
+            ;
+
+            var button = document.getElementById("saveBut");
+            var input = document.getElementById("newTODO");
+
+            button.addEventListener("click", click, false);
+
+        </script>
+    </html>
+
+        <!--<section class="main">-->
+            <!--<input class="toggle-all" type="checkbox">-->
+            <!--<label for="toggle-all">Mark all as complete</label>-->
+            <!--<ul class="todo-list"></ul>-->
+        <!--</section>-->
+        <!--<footer class="footer">-->
+            <!--<span class="todo-count"></span>-->
+            <!--<ul class="filters">-->
+                <!--<li>-->
+                    <!--<a href="#/" class="selected">All</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a href="#/active">Active</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a href="#/completed">Completed</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <!--<button class="clear-completed">Clear completed</button>-->
+        <!--</footer>-->
+    <!--</section>-->
+    <!--<table id="task">-->
+        <!--<tr>-->
+            <!--<td>Description</td>-->
+            <!--<td>Status</td>-->
+        <!--<tr>-->
+    <!--</table>-->
+
+
+
+    <!--<script src="todostore.js"></script>-->
+    <!--<script src="todomodel.js"></script>-->
+    <!--<script src="todotemplate.js"></script>-->
+    <!--<script src="todobase.js"></script>-->
+    <!--<script src="todoview.js"></script>-->
+    <!--<script src="todocontroller.js"></script>-->
+    <!--<script src="todoapp.js"></script>-->
+    <!--<script src="js/lib/jquery-1.11.1.js"></script>-->
+    <!--<script src="js/game.js"></script>-->
+
+<!--</html>-->
