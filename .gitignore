@@ -1,0 +1,12 @@
+*.iml
+.idea
+target
+todoapp.js
+todobase.js
+todocontroller.js
+todohelpers.js
+todomodel.js
+todostore.js
+todotemplate.js
+todoview.js
+out
